@@ -3,7 +3,12 @@ import { Counter } from './features/counter/Counter';
 import SearchMoviePage from "./pages/homePage";
 import Header from "./components/header";
 
+import {fetchAllMoviesAsync} from "./app/reducers/allMoviesSlice";
+import {store} from "./app/store";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+store.dispatch(fetchAllMoviesAsync(1));
 
 function App() {
   return (

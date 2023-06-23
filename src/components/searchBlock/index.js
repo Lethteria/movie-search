@@ -1,12 +1,22 @@
 import React, {useState} from "react";
 import styles from "./searchBlock.module.scss";
 
+import {selectSearch, searchMoviesAsync} from "../../app/reducers/searchSlice";
+import { useSelector, useDispatch } from 'react-redux';
+
 import Form from 'react-bootstrap/Form';
 
 export default function SearchBlock(){
+
+    const searchResult = useSelector(selectSearch);
+    const dispatch = useDispatch();
+
     const [inputValue, setInputValue] = useState(" ");
+
     function onInputChange(e){
-        setInputValue(e.target.value)
+        let movieTitle = e.target.value;
+        setInputValue(movieTitle);
+        dispatch(searchMoviesAsync(movieTitle));
     }
 
     return(
