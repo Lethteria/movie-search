@@ -6,16 +6,15 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import {MdFavorite} from "react-icons/md";
 import {useDispatch} from "react-redux";
-import {fetchAllMoviesAsync, setCurrentPage} from "../../app/reducers/allMoviesSlice";
+import {fetchAllMoviesAsync1, setCurrentPage} from "../../app/reducers/searchSlice";
 
 export default function Header(){
 
     const dispatch = useDispatch();
 
     function onLogoClick(){
-        //dispatch(fetchAllMoviesAsync(1));
-        dispatch(setCurrentPage(1))
-        console.log("click")
+        dispatch(setCurrentPage(1));
+        dispatch(fetchAllMoviesAsync1("1"));
     }
     return(
         <header className={styles.wrap}>

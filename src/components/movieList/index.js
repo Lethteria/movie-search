@@ -1,40 +1,47 @@
 import React, {useEffect, useState} from "react";
 import MovieCardShort from "../movieCardShort";
+import Preloader from "../preloader";
 
-import {
-    fetchAllMoviesAsync,
-    removeAllMovies,
-    selectAllMovies,
-    selectCurrentPage
-} from "../../app/reducers/allMoviesSlice";
-import {selectSearch} from "../../app/reducers/searchSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import {useDispatch, useSelector} from "react-redux";
-import Preloader from "../preloader";
+import {
+    fetchAllMoviesAsync1, searchByTitleAsync1, searchUseFiltersAsync1,
+    selectSearchCurrentPage, selectSearchParam,
+    selectSearchResult,
+    selectSearchStatus, selectSearchType
+} from "../../app/reducers/searchSlice";
 
 export default function MovieList(){
     const dispatch = useDispatch();
-    const currentPage = useSelector(selectCurrentPage);
-    const allMovies = useSelector(selectAllMovies);
-    const allMoviesStatus = useSelector((state) => state.allMovies.status)
-    const [moviesSearch, setMoviesSearch] = useState(false);
-
-    const searchResult = useSelector(selectSearch);
-    const searchResultStatus = useSelector((state) => state.search.status);
+    const searchResult = useSelector(selectSearchResult);
+    const searchResultStatus = useSelector(selectSearchStatus);
+    const searchCurrentPage = useSelector(selectSearchCurrentPage);
+    const searchType = useSelector(selectSearchType);
+    const searchParam  = useSelector(selectSearchParam);
 
     useEffect(() => {
         if (searchResultStatus === "succeeded") {
-            setMoviesSearch(true);
-            if (allMovies) dispatch(removeAllMovies());
+            //setMoviesSearch(true);
+            //if (allMovies) dispatch(removeAllMovies());
         }
     },[searchResultStatus])
 
     useEffect(() => {
-        dispatch(fetchAllMoviesAsync(currentPage));
-        console.log(currentPage)
-    }, [currentPage])
+
+        switch (searchType) {
+            case "all":
+                dispatch(fetchAllMoviesAsync1(searchCurrentPage));
+                break;
+            case "title":
+                dispatch(searchByTitleAsync1({title: searchParam,page: searchCurrentPage}));
+                break;
+            case "filters":
+                dispatch(searchUseFiltersAsync1({keyword: searchParam,page: searchCurrentPage}));
+                break;
+        }
+    }, [searchCurrentPage])
 
     function displayMoviesList(moviesArr){
         return moviesArr.map((movie) => (
@@ -50,23 +57,17 @@ export default function MovieList(){
     }
 
     let searchContent;
+    if (searchResultStatus === "loading" && searchResult) searchContent = displayMoviesList(searchResult);
     if (searchResultStatus === "succeeded") searchContent = displayMoviesList(searchResult);
-
-    let startContent;
-    if (allMoviesStatus === "loading" && allMovies) startContent =  displayMoviesList(allMovies);
-    if ( allMoviesStatus === "succeeded") startContent =  displayMoviesList(allMovies);
 
     return(
         <>
-            {(allMoviesStatus === "loading" || searchResultStatus === "loading")
+            {(searchResultStatus === "loading" )
                 ? <Preloader/>
                 : null
             }
             <Row xs={1} sm={2} md={4} className="g-4">
-                {(moviesSearch)
-                    ? searchContent
-                    : startContent
-                }
+                {searchContent}
             </Row>
         </>
     )

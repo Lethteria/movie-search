@@ -44,7 +44,7 @@ export const allMoviesSlice = createSlice({
     }
 })
 
-export const { removeAllMovies, setCurrentPage } = allMoviesSlice.actions;
+//export const { removeAllMovies, setCurrentPage } = allMoviesSlice.actions;
 
 export const selectAllMovies = (state) => state.allMovies.data;
 export const selectCurrentPage = (state) => state.allMovies.currentPage;
