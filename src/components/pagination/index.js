@@ -1,26 +1,48 @@
 import React, {useEffect, useState} from "react";
 import styles from "./pagination.module.scss";
+import {createPages} from "./paginationHelpFunctions";
+
 import Pagination from 'react-bootstrap/Pagination';
 import {useDispatch, useSelector} from "react-redux";
-import {selectSearchCurrentPage, selectSearchType, setCurrentPage} from "../../app/reducers/searchSlice";
+import {
+    selectSearchCurrentPage,
+    selectSearchTotalPages,
+    selectSearchType,
+    setCurrentPage
+} from "../../app/reducers/searchSlice";
 
 export default function MoviePagination(){
 
     const currentPage = useSelector(selectSearchCurrentPage);
     const dispatch = useDispatch();
     const searchType = useSelector(selectSearchType);
+    const totalPages = useSelector(selectSearchTotalPages);
     const [activePage, setActivePage] = useState(currentPage);
-    let pages = [1,2,3,4,5,6,7,8,9,10];
-
-    //useEffect(() => {
-        //setActivePage(+currentPage);
-        //console.log(`page ${currentPage}`)
-    //}, [currentPage])
+    const pages = createPages(currentPage, totalPages);
 
     useEffect(() => {
         setActivePage(1);
-    //console.log(`page ${currentPage}`)
     }, [searchType])
+
+    function displayPageItem(page){
+        return <Pagination.Item key={page}
+                                id={page}
+                                active={page === activePage}
+                                onClick={onPageClick}
+        >
+            {page}
+        </Pagination.Item>
+    }
+
+    const pageList = pages.map((page) => displayPageItem(page))
+
+    const nextButton = (+currentPage === totalPages)
+        ? <Pagination.Next disabled/>
+        : <Pagination.Next onClick={onNextClick}/>
+
+    const prevButton = (+currentPage === 1)
+        ? <Pagination.Prev disabled/>
+        : <Pagination.Prev onClick={onPrevClick}/>
 
     function onPageClick(e){
         const page = e.target.id;
@@ -28,21 +50,44 @@ export default function MoviePagination(){
         setActivePage(+page)
     }
 
-    const pageList = pages.map((page) =>
-        <Pagination.Item key={page}
-                         id={page}
-                         active={page === activePage}
-                         onClick={onPageClick}
-        >
-            {page}
-        </Pagination.Item>,
-    )
+    function onNextClick(){
+        dispatch(setCurrentPage(activePage + 1));
+        setActivePage((page) => page + 1);
+    }
+
+    function onPrevClick(){
+        dispatch(setCurrentPage(activePage - 1));
+        setActivePage((page) => page - 1)
+    }
 
     return (
             <Pagination className={styles.pagination}>
-                <Pagination.Prev />
+
+                { (totalPages > 1 ) ? <>{prevButton}</> : null }
+
+                {displayPageItem(1)}
+
+                {(+currentPage > 4 && totalPages > 7)
+                    ? <Pagination.Ellipsis disabled/>
+                    : null
+                }
+
                 {pageList}
-                <Pagination.Next />
+
+                { (+currentPage < totalPages - 3 && totalPages > 7)
+                    ? <Pagination.Ellipsis disabled/>
+                    : null
+                }
+
+                { (totalPages > 1 )
+                    ? <>
+                        {displayPageItem(totalPages)}
+
+                        {nextButton}
+                      </>
+                    : null
+                }
+
             </Pagination>
     )
 }

@@ -7,6 +7,7 @@ const initialState = {
     status: 'idle',// 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,//string | null
     currentPage: 1,
+    totalPages: 0,
     searchType: "all",
     searchParam: null
 }
@@ -55,7 +56,11 @@ export const searchSlice = createSlice({
             .addCase(searchByTitleAsync1.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 const moviesResult = action.payload;
+                //const totalPagesResult =
                 state.data = mapMoviesData(moviesResult.results);
+                ( moviesResult.total_pages > 500 ) ? state.totalPages = 500 : state.totalPages = moviesResult.total_pages;
+                    //state.totalPages = moviesResult.total_pages;
+                //console.log (moviesResult.total_pages);
             })
             .addCase(searchByTitleAsync1.rejected, (state, action) => {
                 state.status = "failed";
@@ -69,6 +74,8 @@ export const searchSlice = createSlice({
                 state.status = "succeeded";
                 const moviesResult = action.payload;
                 state.data = mapMoviesData(moviesResult.results);
+                ( moviesResult.total_pages > 500 ) ? state.totalPages = 500 : state.totalPages = moviesResult.total_pages;
+                //state.totalPages = moviesResult.total_pages;
             })
             .addCase(searchUseFiltersAsync1.rejected, (state, action) => {
                 state.status = "failed";
@@ -79,9 +86,11 @@ export const searchSlice = createSlice({
                 state.searchType = "all";
             })
             .addCase(fetchAllMoviesAsync1.fulfilled, (state, action) => {
-                const movies = action.payload;
+                const moviesResult = action.payload;
                 state.status = "succeeded";
-                state.data = mapMoviesData(movies.results);
+                state.data = mapMoviesData(moviesResult.results);
+                ( moviesResult.total_pages > 500 ) ? state.totalPages = 500 : state.totalPages = moviesResult.total_pages;
+                //state.totalPages = movies.total_pages;
             })
             .addCase(fetchAllMoviesAsync1.rejected, (state, action) => {
                 state.status = "failed";
@@ -97,6 +106,7 @@ export const selectSearchStatus = (state) => state.search.status;
 export const selectSearchCurrentPage = (state) => state.search.currentPage;
 export const selectSearchType = (state) => state.search.searchType;
 export const selectSearchParam = (state) => state.search.searchParam;
+export const selectSearchTotalPages = (state) => state.search.totalPages;
 
 export default searchSlice.reducer;
 

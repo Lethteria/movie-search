@@ -17,7 +17,6 @@ export function getAllMovies(page){
 }
 
 export function searchByTitle(title,page){
-    console.log(title);
     return fetch(`https://api.themoviedb.org/3/search/movie?query=${title}&include_adult=false&language=en-US&page=${page}`, options)
         .then(response => {
             if (response.ok) return response.json();
