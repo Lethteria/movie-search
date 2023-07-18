@@ -8,8 +8,10 @@ import {store} from "./app/store";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {fetchAllMoviesAsync1} from "./app/reducers/searchSlice";
+import {fetchGenresAsync} from "./app/reducers/genresSlice";
 
 store.dispatch(fetchAllMoviesAsync1(1));
+store.dispatch(fetchGenresAsync());
 
 function App() {
   return (

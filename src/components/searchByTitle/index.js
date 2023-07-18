@@ -13,10 +13,11 @@ export default function SearchByTitle(){
     const [inputValue, setInputValue] = useState(" ");
 
     function onInputChange(e){
+        setInputValue(e.target.value);
         let title = e.target.value.trim();
-        setInputValue(title);
+        if ( !title.length) title = " ";
         dispatch(searchByTitleAsync1({title,page: 1}));
-        dispatch(setSearchParam(title));
+        dispatch(setSearchParam({title}));
         dispatch(setCurrentPage(1));
     }
 

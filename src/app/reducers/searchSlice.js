@@ -9,7 +9,11 @@ const initialState = {
     currentPage: 1,
     totalPages: 0,
     searchType: "all",
-    searchParam: null
+    searchParam: {title: null,
+                  keyword: null,
+                  genres: [],
+                  sortBy: "vote_average.desc"
+                 }
 }
 
 export const fetchAllMoviesAsync1 = createAsyncThunk(
@@ -20,16 +24,23 @@ export const fetchAllMoviesAsync1 = createAsyncThunk(
 )
 export const searchByTitleAsync1 = createAsyncThunk(
     "search/searchByTitleAsync1",
-    function (data){
+    async function (data){
         const {title,page} = data;
-        return searchByTitle(title, page);
+        if (!title.trim().length ) {throw Error("Please, enter the title of the movie.")}
+        else {
+            let result = await searchByTitle(title, page);
+
+            if (result.total_results) return result
+            else throw new Error("Nothing found for this title.");
+        }
     }
 )
 export const searchUseFiltersAsync1 = createAsyncThunk(
     "search/searchUseFiltersAsync1",
-    function (data){
-        const {keyword,page} = data;
-        return searchUseFilters(data);
+    async function (data){
+        const {param,page} = data;
+        //let response = await searchUseFilters(param,page);
+        return await searchUseFilters(param,page);
     }
 )
 export const searchSlice = createSlice({
@@ -38,35 +49,44 @@ export const searchSlice = createSlice({
     reducers: {
         removeMovies: () => {},
         setSearchParam(state,action){
-            state.searchParam = action.payload
+            let data = action.payload;
+            if (data.title) state.searchParam.title = data.title;
+            if (data.keyword) state.searchParam.keyword = data.keyword;
+            if (data.genres) state.searchParam.genres.push(data.genres);
+            if (data.sortBy) state.searchParam.sortBy = data.sortBy;
+        },
+        removeSearchGenres(state, action){
+            let index = state.searchParam.genres.indexOf(action.payload);
+            state.searchParam.genres.splice(index, 1);
         },
         setCurrentPage(state, action){
             state.currentPage = action.payload
         },
-        resetStatus(state, action){
+        resetStatus(state){
             state.status = "idle"
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(searchByTitleAsync1.pending, (state, action) => {
+            .addCase(searchByTitleAsync1.pending, (state) => {
                 state.status = "loading";
                 state.searchType = "title";
             })
             .addCase(searchByTitleAsync1.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 const moviesResult = action.payload;
-                //const totalPagesResult =
+
                 state.data = mapMoviesData(moviesResult.results);
                 ( moviesResult.total_pages > 500 ) ? state.totalPages = 500 : state.totalPages = moviesResult.total_pages;
-                    //state.totalPages = moviesResult.total_pages;
-                //console.log (moviesResult.total_pages);
             })
             .addCase(searchByTitleAsync1.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.error.message;
+                state.data = null;
+                state.currentPage = 1;
+                state.totalPages = 0;
             })
-            .addCase(searchUseFiltersAsync1.pending, (state, action) => {
+            .addCase(searchUseFiltersAsync1.pending, (state) => {
                 state.status = "loading";
                 state.searchType = "filters";
             })
@@ -75,13 +95,13 @@ export const searchSlice = createSlice({
                 const moviesResult = action.payload;
                 state.data = mapMoviesData(moviesResult.results);
                 ( moviesResult.total_pages > 500 ) ? state.totalPages = 500 : state.totalPages = moviesResult.total_pages;
-                //state.totalPages = moviesResult.total_pages;
             })
             .addCase(searchUseFiltersAsync1.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.error.message;
+                console.error(state.error);
             })
-            .addCase(fetchAllMoviesAsync1.pending, (state, action) => {
+            .addCase(fetchAllMoviesAsync1.pending, (state) => {
                 state.status = "loading";
                 state.searchType = "all";
             })
@@ -99,7 +119,7 @@ export const searchSlice = createSlice({
     }
 })
 
-export const { removeMovies, setCurrentPage, setSearchParam, resetStatus } = searchSlice.actions;
+export const { removeSearchGenres, setCurrentPage, setSearchParam, resetStatus } = searchSlice.actions;
 
 export const selectSearchResult = (state) => state.search.data;
 export const selectSearchStatus = (state) => state.search.status;
@@ -107,12 +127,7 @@ export const selectSearchCurrentPage = (state) => state.search.currentPage;
 export const selectSearchType = (state) => state.search.searchType;
 export const selectSearchParam = (state) => state.search.searchParam;
 export const selectSearchTotalPages = (state) => state.search.totalPages;
+export const selectSearchError = (state) => state.search.error;
 
 export default searchSlice.reducer;
 
-// const API_KEY = '2c5d54745aafd8076dfa859c4964b195';
-// let url = {
-// 	searchMovieUrl: `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=`,
-// 	imgSrcUrl: `https://www.themoviedb.org/t/p/w300_and_h450_bestv2`,
-// 	noImgSrcUrl: `https://www.ncenet.com/wp-content/uploads/2020/04/no-image-png-2.png`
-// }

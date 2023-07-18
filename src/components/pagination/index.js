@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import styles from "./pagination.module.scss";
 import {createPages} from "./paginationHelpFunctions";
 
@@ -7,7 +7,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     selectSearchCurrentPage,
     selectSearchTotalPages,
-    selectSearchType,
     setCurrentPage
 } from "../../app/reducers/searchSlice";
 
@@ -15,19 +14,13 @@ export default function MoviePagination(){
 
     const currentPage = useSelector(selectSearchCurrentPage);
     const dispatch = useDispatch();
-    const searchType = useSelector(selectSearchType);
     const totalPages = useSelector(selectSearchTotalPages);
-    const [activePage, setActivePage] = useState(currentPage);
     const pages = createPages(currentPage, totalPages);
-
-    useEffect(() => {
-        setActivePage(1);
-    }, [searchType])
 
     function displayPageItem(page){
         return <Pagination.Item key={page}
                                 id={page}
-                                active={page === activePage}
+                                active={page === +currentPage}
                                 onClick={onPageClick}
         >
             {page}
@@ -47,17 +40,14 @@ export default function MoviePagination(){
     function onPageClick(e){
         const page = e.target.id;
         dispatch(setCurrentPage(page));
-        setActivePage(+page)
     }
 
     function onNextClick(){
-        dispatch(setCurrentPage(activePage + 1));
-        setActivePage((page) => page + 1);
+        dispatch(setCurrentPage(+currentPage + 1));
     }
 
     function onPrevClick(){
-        dispatch(setCurrentPage(activePage - 1));
-        setActivePage((page) => page - 1)
+        dispatch(setCurrentPage(currentPage - 1));
     }
 
     return (
