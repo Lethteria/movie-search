@@ -8,12 +8,7 @@ const initialState = {
     error: null,//string | null
     currentPage: 1,
     totalPages: 0,
-    searchType: "all",
-    searchParam: {title: null,
-                  keyword: null,
-                  genres: [],
-                  sortBy: "vote_average.desc"
-                 }
+    searchType: "all"
 }
 
 export const fetchAllMoviesAsync1 = createAsyncThunk(
@@ -39,26 +34,15 @@ export const searchUseFiltersAsync1 = createAsyncThunk(
     "search/searchUseFiltersAsync1",
     async function (data){
         const {param,page} = data;
-        //let response = await searchUseFilters(param,page);
         return await searchUseFilters(param,page);
     }
 )
+
 export const searchSlice = createSlice({
     name: "search",
     initialState,
     reducers: {
         removeMovies: () => {},
-        setSearchParam(state,action){
-            let data = action.payload;
-            if (data.title) state.searchParam.title = data.title;
-            if (data.keyword) state.searchParam.keyword = data.keyword;
-            if (data.genres) state.searchParam.genres.push(data.genres);
-            if (data.sortBy) state.searchParam.sortBy = data.sortBy;
-        },
-        removeSearchGenres(state, action){
-            let index = state.searchParam.genres.indexOf(action.payload);
-            state.searchParam.genres.splice(index, 1);
-        },
         setCurrentPage(state, action){
             state.currentPage = action.payload
         },
@@ -119,13 +103,12 @@ export const searchSlice = createSlice({
     }
 })
 
-export const { removeSearchGenres, setCurrentPage, setSearchParam, resetStatus } = searchSlice.actions;
+export const { setCurrentPage, resetStatus } = searchSlice.actions;
 
 export const selectSearchResult = (state) => state.search.data;
 export const selectSearchStatus = (state) => state.search.status;
 export const selectSearchCurrentPage = (state) => state.search.currentPage;
 export const selectSearchType = (state) => state.search.searchType;
-export const selectSearchParam = (state) => state.search.searchParam;
 export const selectSearchTotalPages = (state) => state.search.totalPages;
 export const selectSearchError = (state) => state.search.error;
 

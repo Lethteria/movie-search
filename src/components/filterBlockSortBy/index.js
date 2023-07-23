@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 import {useDispatch} from "react-redux";
-import {setSearchParam} from "../../app/reducers/searchSlice";
+import {setSearchParam} from "../../app/reducers/searchParamSlice";
 
 function SortButton(props){
     const {id, activeId, onClick, children} = props;

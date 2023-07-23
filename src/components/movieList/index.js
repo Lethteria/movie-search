@@ -9,9 +9,11 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import {
     fetchAllMoviesAsync1, searchByTitleAsync1, searchUseFiltersAsync1,
-    selectSearchCurrentPage, selectSearchParam, selectSearchResult,
+    selectSearchCurrentPage, selectSearchResult,
     selectSearchStatus, selectSearchType
 } from "../../app/reducers/searchSlice";
+
+import {selectSearchParam} from "../../app/reducers/searchParamSlice";
 
 
 export default function MovieList(){

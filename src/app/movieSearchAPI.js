@@ -47,10 +47,22 @@ function getKeywordForSearch(title){
         .then(response => response.json())
         .then(response => {
             let key = response.results.filter(item => item.name === title);
-            if (key[0]) return key[0].id;
+            console.log(response.results)
+            if (key[0]) {
+                return key[0].id;
+            }
             //else throw new Error("nothing found for this keyword") ;
             }
         )
+}
+
+export async function getKeywordForSearch1(keyword){
+
+    let response = await fetch(`https://api.themoviedb.org/3/search/keyword?query=${keyword}&page=1`, options);
+    if (response.ok) {
+        return response.json();
+    }
+    else throw new Error("nothing found for this keyword") ;
 }
 
 export function getGenres(){

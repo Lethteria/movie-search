@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
 import {useDispatch, useSelector} from "react-redux";
 import {selectGenres} from "../../app/reducers/genresSlice";
-import {removeSearchGenres, setSearchParam} from "../../app/reducers/searchSlice";
+import {removeSearchGenres, setSearchParam} from "../../app/reducers/searchParamSlice";
 
 function GenresButton(props){
 
