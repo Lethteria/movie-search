@@ -1,0 +1,14 @@
+@import "../../colors";
+
+.icon {
+  font-size: 24px;
+
+  path {
+    stroke: $secondary-dark-blue;
+  }
+  &:hover {
+    path {
+      fill: $secondary-dark-blue;
+    }
+  }
+}

@@ -1,14 +1,25 @@
 
 let url = {
-    //searchMovieUrl: `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=`,
-    imgSrcUrl: `https://image.tmdb.org/t/p/w154`,//`https://www.themoviedb.org/t/p/w300_and_h450_bestv2`,
+    imgSrcUrlSmall: `https://image.tmdb.org/t/p/w154`,
+    imgSrcUrlBig: `https://image.tmdb.org/t/p/w300`,
+    imgSrcUrlFull: `https://image.tmdb.org/t/p/w780`,
     noImgSrcUrl: `https://www.ncenet.com/wp-content/uploads/2020/04/no-image-png-2.png`
 }
 
-function getMovieImg(data){
-    const imgUrl = data.poster_path || data.backdrop_path;
-    if (imgUrl) return url.imgSrcUrl + imgUrl;
+function getMoviePoster(data, imgSrcUrl){
+    const imgUrl = data.poster_path;
+    if (imgUrl) return url[imgSrcUrl] + imgUrl;
     return url.noImgSrcUrl;
+}
+
+function getMovieFullImg(data, imgSrcUrl){
+    const imgUrl = data.backdrop_path;
+    if (imgUrl) return url[imgSrcUrl] + imgUrl;
+}
+
+function getMovieYear(str){
+    let date = new Date(str);
+    return date.getFullYear();
 }
 
 const genres = [
@@ -45,15 +56,42 @@ function getGenres(arr){
 export function mapMoviesData(arr){
     return arr.map(movie => {
         return {
-            title: movie.title, //|| movie.original_name
-            img: getMovieImg(movie),
-            date:  movie.release_date,// || movie.first_air_date
+            title: movie.title,
+            img: getMoviePoster(movie,'imgSrcUrlSmall'),
+            date:  movie.release_date,
             rate: movie.vote_average || 0,
             genres: getGenres(movie.genre_ids),
-            //country: movie.origin_country,
-            //language: movie.original_language,
-            //overview: movie.overview,
             id: movie.id
         }
     })
+}
+
+export function mapMoviesFullData(movie){
+
+        return {
+            poster: getMoviePoster(movie,'imgSrcUrlBig'),
+            fullImg: getMovieFullImg(movie, 'imgSrcUrlFull'),
+            budget: movie.budget || "no info",
+            genres: movie.genres,
+            id: movie.id,
+            language: movie.original_language,
+            title: movie.title,
+            overview: movie.overview,
+            releaseDate: movie.release_date,
+            year: getMovieYear(movie.release_date),
+            runtime: movie.runtime || "no info",
+            status: movie.status,
+            tagline: movie.tagline,
+            rate: movie.vote_average || 0,
+
+            /*director: "" /*movies => credits, {id: ,
+                                 casts: [{}, {}, {}],
+                                 crew: [ {}, {},
+                                         {
+                                            name: "bcvb "
+                                            jod: "director"
+                                         }
+                                        ]
+                                }*/
+        }
 }

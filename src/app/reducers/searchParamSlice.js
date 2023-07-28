@@ -18,7 +18,6 @@ export const fetchKeywordsAsync = createAsyncThunk(
     "searchParam/fetchKeywordsAsync",
     async function(keyword){
         let response = await getKeywordForSearch1(keyword);
-        //console.log(response);
         if (response.total_results) return response.results;
         else throw new Error("Nothing found for this  keyword.");
     }
@@ -47,7 +46,6 @@ export const searchParamSlice = createSlice({
             })
             .addCase(fetchKeywordsAsync.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                console.log(action.payload);
                 state.data.keywords = action.payload;
             })
             .addCase(fetchKeywordsAsync.rejected, (state, action) => {

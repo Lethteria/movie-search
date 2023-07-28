@@ -3,8 +3,9 @@ import {useCombobox} from "downshift";
 import Form from "react-bootstrap/Form";
 import style from "./filterInputAutocompl.module.scss";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchKeywordsAsync,
-        selectSearchKeywords
+import {
+    fetchKeywordsAsync,
+    selectSearchKeywords, setSearchParam
 } from "../../app/reducers/searchParamSlice";
 
 export default function FilterInputAutocomplete(){
@@ -25,6 +26,8 @@ export default function FilterInputAutocomplete(){
         onInputValueChange: ({inputValue}) => {
             dispatch(fetchKeywordsAsync(inputValue));
             console.log(keywordList)
+
+            if (!inputValue.trim().length) setSelectedItem(null);
         },
         itemToString(item) {
             return item ? item.name : ''
@@ -33,6 +36,7 @@ export default function FilterInputAutocomplete(){
         onSelectedItemChange: ({selectedItem: newSelectedItem}) => {
             console.log(selectedItem);
             setSelectedItem(newSelectedItem);
+            dispatch(setSearchParam({keyword: newSelectedItem}))
         }
 
     })

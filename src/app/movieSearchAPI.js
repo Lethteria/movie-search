@@ -1,5 +1,3 @@
-
-
 const options = {
     method: 'GET',
     headers: {
@@ -31,29 +29,15 @@ export async function searchUseFilters(param,page){
         str = str + "&with_genres=" + substr.substring(3);
     }
     if (param.keyword) {
-        let key = await getKeywordForSearch(param.keyword);
+        let key = param.keyword.id;
         console.log(key);
         str = str + `&with_keywords=${key}`
     }
 
     let response = await fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&vote_count.gte=150${str}`, options)
-
+    console.log(str);
     if (response.ok) return response.json();
     else throw Error;
-}
-
-function getKeywordForSearch(title){
-    return fetch(`https://api.themoviedb.org/3/search/keyword?query=${title}&page=1`, options)
-        .then(response => response.json())
-        .then(response => {
-            let key = response.results.filter(item => item.name === title);
-            console.log(response.results)
-            if (key[0]) {
-                return key[0].id;
-            }
-            //else throw new Error("nothing found for this keyword") ;
-            }
-        )
 }
 
 export async function getKeywordForSearch1(keyword){
@@ -68,5 +52,23 @@ export async function getKeywordForSearch1(keyword){
 export function getGenres(){
      return fetch(`https://api.themoviedb.org/3/genre/movie/list?language=en`, options)
         .then(response => response.json())
+}
+
+export async function getMovie(id){
+    let response = await fetch(`https://api.themoviedb.org/3/movie/${id}`, options);
+    if (response.ok) {
+        return response.json();
+    }
+    else throw new Error("Nothing found") ;
+}
+
+export async function getMovieImg(id){
+    let response = await fetch(`https://api.themoviedb.org/3/movie/${id}/images`, options)
+    if (response.ok) {
+        let imgArr = response.json();
+        return imgArr.backdrops[0].file_path;
+        //return response.json();
+    }
+    else throw new Error("No img") ;
 }
 
