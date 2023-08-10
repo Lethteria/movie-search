@@ -34,7 +34,9 @@ export const searchUseFiltersAsync1 = createAsyncThunk(
     "search/searchUseFiltersAsync1",
     async function (data){
         const {param,page} = data;
-        return await searchUseFilters(param,page);
+        let result = await searchUseFilters(param,page);
+        if (result.total_results) return result;
+        else throw new Error("Nothing found for search parameters.");
     }
 )
 
@@ -42,7 +44,6 @@ export const searchSlice = createSlice({
     name: "search",
     initialState,
     reducers: {
-        removeMovies: () => {},
         setCurrentPage(state, action){
             state.currentPage = action.payload
         },
@@ -83,7 +84,9 @@ export const searchSlice = createSlice({
             .addCase(searchUseFiltersAsync1.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.error.message;
-                console.error(state.error);
+                state.data = null;
+                state.currentPage = 1;
+                state.totalPages = 0;
             })
             .addCase(fetchAllMoviesAsync1.pending, (state) => {
                 state.status = "loading";
@@ -94,7 +97,6 @@ export const searchSlice = createSlice({
                 state.status = "succeeded";
                 state.data = mapMoviesData(moviesResult.results);
                 ( moviesResult.total_pages > 500 ) ? state.totalPages = 500 : state.totalPages = moviesResult.total_pages;
-                //state.totalPages = movies.total_pages;
             })
             .addCase(fetchAllMoviesAsync1.rejected, (state, action) => {
                 state.status = "failed";

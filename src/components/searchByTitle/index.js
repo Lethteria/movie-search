@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import { useDispatch } from 'react-redux';
 
 import Form from 'react-bootstrap/Form';
-import styles from "../searchBlock/searchBlock.module.scss";
+import styles from "./searchByTitle.module.scss"
 import {searchByTitleAsync1, setCurrentPage} from "../../app/reducers/searchSlice";
 import {setSearchParam} from "../../app/reducers/searchParamSlice";
 

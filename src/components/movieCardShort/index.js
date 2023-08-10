@@ -27,7 +27,7 @@ export default function MovieCardShort(props){
 
             <div className={styles.buttons}>
                 <ButtonMoreInfo movieId={id} />
-                <ButtonAddToFavor />
+                <ButtonAddToFavor {...props}/>
             </div>
 
         </Card.Body>

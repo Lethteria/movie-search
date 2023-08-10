@@ -61,6 +61,7 @@ export function mapMoviesData(arr){
             date:  movie.release_date,
             rate: movie.vote_average || 0,
             genres: getGenres(movie.genre_ids),
+            overview: movie.overview,
             id: movie.id
         }
     })

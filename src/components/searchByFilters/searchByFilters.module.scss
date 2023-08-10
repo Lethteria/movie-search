@@ -1,0 +1,13 @@
+.blockWrap {
+  margin-bottom: 1.5rem;
+  &.sortBy {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
+
+.form {
+  width: 50%;
+  margin: auto;
+}

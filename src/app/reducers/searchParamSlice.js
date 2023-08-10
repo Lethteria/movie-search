@@ -37,6 +37,15 @@ export const searchParamSlice = createSlice({
         removeSearchGenres(state, action){
             let index = state.data.genres.indexOf(action.payload);
             state.data.genres.splice(index, 1);
+        },
+        resetSearchTitle(state){
+            state.data.title = null;
+        },
+        resetSearchFilter(state){
+            state.data.keyword = null;
+            state.data.keywords = [];
+            state.data.genres = [];
+            state.data.sortBy = "vote_average.desc";
         }
     },
     extraReducers: (builder) => {
@@ -55,9 +64,11 @@ export const searchParamSlice = createSlice({
     }
 })
 
-export const {setSearchParam, removeSearchGenres} = searchParamSlice.actions;
+export const {setSearchParam, removeSearchGenres,
+              resetSearchTitle, resetSearchFilter} = searchParamSlice.actions;
 
 export const selectSearchParam = (state) => state.searchParam.data;
 export const selectSearchKeywords = (state) => state.searchParam.data.keywords;
+export const selectSearchKeyword = (state) => state.searchParam.data.keyword;
 
 export default searchParamSlice.reducer;

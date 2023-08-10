@@ -3,8 +3,15 @@
   margin-bottom: 50px;
   text-align: center;
 
+  .tabWrap {
+    margin-bottom: 40px;
+  }
+
 }
-.form {
+
+.tabItem {
   width: 50%;
-  margin: auto;
+  a {
+    display: block;
+  }
 }

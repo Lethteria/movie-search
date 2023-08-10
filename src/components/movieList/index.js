@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import styles from "./movieList.module.scss"
 import MovieCardShort from "../movieCardShort";
 import Preloader from "../preloader";
 import ErrorAlert from "../errorAlert";
@@ -40,16 +41,26 @@ export default function MovieList(){
     }, [searchCurrentPage])
 
     function displayMoviesList(moviesArr){
-        return moviesArr.map((movie) => (
-            <Col key={movie.id}>
-                <MovieCardShort imgSrc={movie.img}
-                                title={movie.title}
-                                year={movie.date}
-                                rate={movie.rate}
-                                genres={movie.genres}
-                                id={movie.id}/>
-            </Col>
-        ))
+        return (
+            <div className={styles.resultWrap}>
+                <Row xs={1} sm={2} md={4} className="g-4">
+                    {
+                        moviesArr.map((movie) => (
+                            <Col key={movie.id}>
+                                <MovieCardShort imgSrc={movie.img}
+                                                title={movie.title}
+                                                year={movie.date}
+                                                rate={movie.rate}
+                                                genres={movie.genres}
+                                                id={movie.id}
+                                                overview={movie.overview}
+                                />
+                            </Col>
+                        ))
+                    }
+                </Row>
+            </div>
+        )
     }
 
     let searchContent;
@@ -68,9 +79,8 @@ export default function MovieList(){
                 : null
             }
 
-            <Row xs={1} sm={2} md={4} className="g-4">
-                {searchContent}
-            </Row>
+            {searchContent}
+
         </>
     )
 }

@@ -1,7 +1,14 @@
 import React from "react";
+import Title from "../../components/title";
 
 export default function FavoritePage(){
     return(
-        <div></div>
+        <div>
+            <Title>
+                Favorite movies
+            </Title>
+
+
+        </div>
     )
 }

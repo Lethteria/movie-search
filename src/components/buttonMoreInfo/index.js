@@ -3,6 +3,7 @@ import React from "react";
 import Button from 'react-bootstrap/Button';
 import {useDispatch} from "react-redux";
 import {fetchMovieAsync} from "../../app/reducers/movieSlice";
+import {Link} from "react-router-dom";
 
 export default function ButtonMoreInfo(props){
     const dispatch = useDispatch();
@@ -12,10 +13,12 @@ export default function ButtonMoreInfo(props){
     }
 
     return (
-        <Button variant="outline-primary"
-                onClick={onClickButton}
-        >
-            More info
-        </Button>
+        <Link to="/movie">
+            <Button variant="outline-primary"
+                    onClick={onClickButton}
+            >
+                More info
+            </Button>
+        </Link>
     )
 }

@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import {MdFavorite} from "react-icons/md";
 import {useDispatch} from "react-redux";
 import {fetchAllMoviesAsync1, setCurrentPage} from "../../app/reducers/searchSlice";
+import {Link} from "react-router-dom";
 
 export default function Header(){
 
@@ -21,16 +22,14 @@ export default function Header(){
             <Navbar>
                 <Container>
 
-                    <Navbar.Brand href="#"
-                                  onClick={onLogoClick}
-                    >
+                    <Link  to="/" className="navbar-brand" onClick={onLogoClick}>
                         <Logo className={styles.logo}/>
-                    </Navbar.Brand>
+                    </Link>
 
-                    <a href="#" className={styles.link}>
+                    <Link to="/favorite" className={styles.link}>
                         <span>Favorite</span>
                         <MdFavorite />
-                    </a>
+                    </Link>
 
                 </Container>
             </Navbar>

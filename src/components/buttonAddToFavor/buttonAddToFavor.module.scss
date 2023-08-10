@@ -8,6 +8,11 @@
   }
   &:hover {
     path {
+      fill: $main-bright-blue;
+    }
+  }
+  &.active {
+    path {
       fill: $secondary-dark-blue;
     }
   }

@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useCombobox} from "downshift";
 import Form from "react-bootstrap/Form";
 import style from "./filterInputAutocompl.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    fetchKeywordsAsync,
+    fetchKeywordsAsync, selectSearchKeyword,
     selectSearchKeywords, setSearchParam
 } from "../../app/reducers/searchParamSlice";
 
@@ -12,7 +12,24 @@ export default function FilterInputAutocomplete(){
 
     const dispatch = useDispatch();
     const keywordList = useSelector(selectSearchKeywords);
-    const [selectedItem, setSelectedItem] = useState(null);
+    const keywordItem = useSelector(selectSearchKeyword)
+    const [selectedItem, setSelectedItem] = useState(keywordItem);
+
+    const stateReducer = React.useCallback((state, actionAndChanges) => {
+        const {type, changes} = actionAndChanges
+
+        switch (type) {
+            case useCombobox.stateChangeTypes.InputChange:
+                dispatch(fetchKeywordsAsync(changes.inputValue));
+                return {...changes,}
+
+            case useCombobox.stateChangeTypes.ItemClick:
+                return {...changes,}
+
+            default:
+                return changes
+        }
+    }, [])
 
     const {
         isOpen,
@@ -24,9 +41,6 @@ export default function FilterInputAutocomplete(){
     } = useCombobox({
         items: keywordList,
         onInputValueChange: ({inputValue}) => {
-            dispatch(fetchKeywordsAsync(inputValue));
-            console.log(keywordList)
-
             if (!inputValue.trim().length) setSelectedItem(null);
         },
         itemToString(item) {
@@ -34,25 +48,25 @@ export default function FilterInputAutocomplete(){
         },
         selectedItem,
         onSelectedItemChange: ({selectedItem: newSelectedItem}) => {
-            console.log(selectedItem);
             setSelectedItem(newSelectedItem);
             dispatch(setSearchParam({keyword: newSelectedItem}))
-        }
-
+        },
+        stateReducer,
     })
+
+    useEffect(() => {
+        if (keywordItem === null) setSelectedItem(null);
+    }, [keywordItem])
 
     return (
         <div className={style.wrap}>
 
             <Form.Label htmlFor="inputMovieName" {...getLabelProps()}>Enter the keyword </Form.Label>
 
-
             <Form.Control type="text"
                           id="inputMovieName"
                           {...getInputProps({refKey: 'ref'})}
             />
-
-
 
                 <ul className={`dropdown-menu ${isOpen ? (style.menuOpen) : ''}`} {...getMenuProps()} >
                 {isOpen &&
@@ -79,7 +93,3 @@ export default function FilterInputAutocomplete(){
         </div>
     )
 }
-
-/*
-
- */
