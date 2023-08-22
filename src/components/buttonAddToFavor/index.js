@@ -1,15 +1,15 @@
 import React from "react";
 import {GrFavorite} from "react-icons/gr";
 import styles from "./buttonAddToFavor.module.scss";
-import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {addMovie, removeMovie, SelectFavoriteMovies} from "../../app/reducers/favoriteSlice";
+import {addMovie, removeMovie, selectFavoriteMovies} from "../../app/reducers/favoriteSlice";
 import clsx from 'clsx';
+import button from "bootstrap/js/src/button";
 
 export default function ButtonAddToFavor(props){
 
     const  dispatch = useDispatch();
-    const favoriteMovies = useSelector(SelectFavoriteMovies);
+    const favoriteMovies = useSelector(selectFavoriteMovies);
     let movieIsFavorite;
 
     movieIsFavorite = favoriteMovies.findIndex( item => item.id === props.id)
@@ -22,13 +22,13 @@ export default function ButtonAddToFavor(props){
     }
 
     return (
-        <Button variant="link"
-                onClick={onClickAddToFavorite}
+        <button className={styles.wrap}
+            onClick={onClickAddToFavorite}
         >
             <GrFavorite className={clsx( styles.icon, {
-                                        [styles.active]: movieIsFavorite !== -1}
-                                   )}
+                    [styles.active]: movieIsFavorite !== -1}
+                )}
             />
-        </Button>
+        </button>
     )
 }

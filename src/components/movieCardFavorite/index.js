@@ -1,21 +1,21 @@
 import React from "react";
-import styles from "./movieCardShort.module.scss";
+import styles from "./movieCardFavorite.module.scss";
 
 import MovieCard from "../movieCard";
 import ButtonMoreInfo from "../buttonMoreInfo";
-import ButtonAddToFavor from "../buttonAddToFavor";
+import ButtonDelFromFavorite from "../buttonDelFromFavorite";
 
-function ShortCardButtons(props){
+function FavoriteCardButtons(props){
     return (
         <div className={styles.buttons}>
             <ButtonMoreInfo movieId={props.id} />
-            <ButtonAddToFavor {...props}/>
+            <ButtonDelFromFavorite id={props.id}/>
         </div>
     )
 }
 
-export default function MovieCardShort(props){
-    const {imgSrc, title, releaseDate, rate, genres} = props;
+export default function MovieCardFavorite(props){
+    const {imgSrc, title, releaseDate, rate, genres, id, overview} = props;
     return (
 
         <MovieCard title={title}
@@ -23,10 +23,8 @@ export default function MovieCardShort(props){
                    genres={genres}
                    imgSrc={imgSrc}
                    rate={rate}
-                   shortCardButtons={
-                       <ShortCardButtons {...props} />
-                   }
-                   cardClassName={styles.wrap}
+                   overview={overview}
+                   favoriteCardButtons={<FavoriteCardButtons id={id} />}
         />
     )
 }

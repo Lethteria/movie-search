@@ -11,8 +11,8 @@ import {selectMovie, selectMovieStatus} from "../../app/reducers/movieSlice";
 
 import { MdLanguage } from "react-icons/md";
 import {MdAccessTime} from "react-icons/md";
-import { BsCalendarCheck } from "react-icons/bs";
-import { BiDollar } from "react-icons/bi";
+import { AiOutlineDollar } from "react-icons/ai";
+import { VscCalendar } from "react-icons/vsc";
 import ButtonAddToFavor from "../buttonAddToFavor";
 
 export default function MovieCardFull(){
@@ -31,15 +31,19 @@ export default function MovieCardFull(){
 
 
         let genresList;
-        if (genres.length) genresList = <h5>
-                {
-                    genres.map( item =>
-                            <span className={styles.genres} key={item.id}>
-                {item.name}
-            </span>
-                    )
-                }
-            </h5>
+        let genresString;
+        if (genres.length)  {
+            genresList = <h5>
+                            {
+                                genres.map( item =>
+                                    <span className={styles.genres} key={item.id}>
+                                            {item.name}
+                                        </span>
+                                )
+                            }
+                        </h5>
+            genresString = genres.map(item => item.name).join(", ");
+        }
 
         let movieTagline;
         if (tagline) movieTagline = <h5 className={styles.tagline}>
@@ -61,27 +65,26 @@ export default function MovieCardFull(){
 
                     <div className={styles.infoDetails}>
                         {genresList}
-                        <h5>
+                        <h5 className={styles.subtitleWrap}>
                             <MdAccessTime/>
                             {runtime} min
                         </h5>
-                        <h5>
+                        <h5 className={styles.subtitleWrap}>
                             <MdLanguage/>
                             {language.toUpperCase()}
                         </h5>
                     </div>
 
                     <div className={styles.infoDetails}>
-                        <h5>
-                            <BsCalendarCheck />
+                        <h5 className={styles.subtitleWrap}>
+                            <VscCalendar />
                             {status}
                         </h5>
                         <h5>
                             {releaseDate}
                         </h5>
-                        <h5>
-
-                            <BiDollar />
+                        <h5 className={styles.subtitleWrap}>
+                            <AiOutlineDollar />
                             {budget}
                         </h5>
                     </div>
@@ -100,7 +103,14 @@ export default function MovieCardFull(){
                             <RateBadge rate={rate} className={styles.rate}/>
                         </h5>
 
-                        <ButtonAddToFavor />
+                        <ButtonAddToFavor id={id}
+                                          imgSrc={poster}
+                                          title={title}
+                                          releaseDate={releaseDate}
+                                          rate={rate}
+                                          genres={genresString}
+                                          overview={overview}
+                        />
                     </div>
 
                 </div>

@@ -1,4 +1,4 @@
-@import "../../colors";
+@import "../../colors1";
 .wrap {
   margin: 50px auto;
 
@@ -29,18 +29,25 @@
   padding: 20px 30px;
   background-repeat: no-repeat;
   background-size: cover;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background: linear-gradient(to right, rgba(223, 224, 255, 0.8), rgba(224, 224, 233, 0.8) 70%, $main-bright-blue 98%);
+  }
+
+  h2 {
+    font-weight: 700;
+    color: $main-dark-blue;
+  }
+
 }
 
-.infoWrap::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  background: linear-gradient(to right, rgba(223, 224, 255, 0.8), rgba(224, 224, 233, 0.8) 70%, $main-bright-blue 98%);
-}
 .info {
   position: relative;
 }
@@ -51,6 +58,15 @@
   h5 {
     margin-right: 15px;
     font-weight: normal
+  }
+}
+.subtitleWrap {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 2px;
+    font-size: 22px;
   }
 }
 .footer {
@@ -91,10 +107,6 @@
   &::before, &::after {
     font-size: 1.5rem;
   }
-}
-h2 {
-  font-weight: 700;
-  color: $secondary-dark-blue;
 }
 .year {
   font-weight: 500;

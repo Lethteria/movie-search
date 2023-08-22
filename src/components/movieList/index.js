@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import {
     fetchAllMoviesAsync1, searchByTitleAsync1, searchUseFiltersAsync1,
-    selectSearchCurrentPage, selectSearchResult,
+    selectSearchCurrentPage, selectSearchError, selectSearchResult,
     selectSearchStatus, selectSearchType
 } from "../../app/reducers/searchSlice";
 
@@ -24,6 +24,7 @@ export default function MovieList(){
     const searchCurrentPage = useSelector(selectSearchCurrentPage);
     const searchType = useSelector(selectSearchType);
     const searchParam  = useSelector(selectSearchParam);
+    const searchError = useSelector(selectSearchError);
 
     useEffect(() => {
 
@@ -47,9 +48,9 @@ export default function MovieList(){
                     {
                         moviesArr.map((movie) => (
                             <Col key={movie.id}>
-                                <MovieCardShort imgSrc={movie.img}
+                                <MovieCardShort imgSrc={movie.imgSrc}
                                                 title={movie.title}
-                                                year={movie.date}
+                                                releaseDate={movie.releaseDate}
                                                 rate={movie.rate}
                                                 genres={movie.genres}
                                                 id={movie.id}
@@ -75,7 +76,9 @@ export default function MovieList(){
             }
 
             {(searchResultStatus === "failed" )
-                ? <ErrorAlert />
+                ? <ErrorAlert>
+                    <p>{searchError}</p>
+                </ErrorAlert>
                 : null
             }
 

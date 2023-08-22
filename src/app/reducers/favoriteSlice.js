@@ -14,7 +14,6 @@ export const favoriteSlice = createSlice({
             state.totalResults += 1;
         },
         removeMovie(state, action){
-            //action.payload = movieId;
             let movieIndex = state.data.findIndex( item => item.id === action.payload);
             state.data.splice(movieIndex, 1)
             state.totalResults -= 1;
@@ -24,7 +23,8 @@ export const favoriteSlice = createSlice({
 
 export const {addMovie, removeMovie} = favoriteSlice.actions;
 
-export const SelectFavoriteMovies = (state) => state.favorite.data;
+export const selectFavoriteMovies = (state) => state.favorite.data;
+export const selectFavoriteMoviesTotal = (state) => state.favorite.totalResults;
 
 export default favoriteSlice.reducer;
 

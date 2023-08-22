@@ -1,0 +1,35 @@
+@import "../../colors1";
+
+.wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  color: $main-bright-blue;
+
+  .text {
+    font-size: 18px;
+    padding-right: 0.5em;
+  }
+  .badge {
+    position: absolute;
+    top: -10px;
+    right: -19px;
+
+    font-size: 14px;
+    color: $main-dark-blue;
+  }
+
+  &:hover .icon path {
+    fill: $main-bright-blue;
+  }
+}
+.icon {
+  font-size: 24px;
+
+  & path {
+    stroke: $main-bright-blue;
+    fill: transparent;
+    transition: all 0.5s ease;
+  }
+}

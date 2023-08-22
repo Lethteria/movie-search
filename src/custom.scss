@@ -1,0 +1,15 @@
+@import "colors1";
+
+$theme-colors: (
+        'primary': $main-dark-blue,
+        "dark": $secondary-dark-blue,
+        "light": $main-bright-blue,
+        "info": $secondary-bright-blue,
+        "secondary": $grey,
+);
+
+$pagination-color: $main-dark-blue;
+$pagination-active-bg: $main-dark-blue;
+
+@import '~bootstrap/scss/bootstrap';
+

@@ -12,7 +12,6 @@ export const fetchMovieAsync = createAsyncThunk(
     "movie/fetchMovieAsync",
     async function(id){
         let response = await getMovie(id);
-        console.log(response);
         if (response.original_title) return response;
         else throw new Error("The page haven't created yet");
     }
@@ -42,7 +41,6 @@ export const movieSlice = createSlice({
             })
             .addCase(fetchMovieAsync.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                console.log(action.payload);
                 const movieResult = action.payload;
                 state.data = mapMoviesFullData(movieResult);
             })

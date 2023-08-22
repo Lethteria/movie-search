@@ -53,12 +53,17 @@ function getGenres(arr){
     return genresArr.join(", ")
 }
 
+function getMovieReleaseDate(srt){
+    return srt.split("-").join("/");
+}
+
 export function mapMoviesData(arr){
     return arr.map(movie => {
         return {
             title: movie.title,
-            img: getMoviePoster(movie,'imgSrcUrlSmall'),
-            date:  movie.release_date,
+            imgSrc: getMoviePoster(movie,'imgSrcUrlSmall'),
+            //releaseDate:  movie.release_date,
+            releaseDate:  getMovieReleaseDate(movie.release_date),
             rate: movie.vote_average || 0,
             genres: getGenres(movie.genre_ids),
             overview: movie.overview,

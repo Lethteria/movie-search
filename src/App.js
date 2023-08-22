@@ -4,7 +4,6 @@ import Header from "./components/header";
 
 import {store} from "./app/store";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {fetchAllMoviesAsync1} from "./app/reducers/searchSlice";
 import {fetchGenresAsync} from "./app/reducers/genresSlice";
 

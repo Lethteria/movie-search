@@ -1,19 +1,27 @@
-@import "../../colors";
-
+@import "../../colors1";
+.wrap {
+  border: none;
+  background: transparent;
+  width: auto;
+}
 .icon {
   font-size: 24px;
 
   path {
-    stroke: $secondary-dark-blue;
+    stroke: $main-dark-blue;
+    fill: transparent;
+    transition: all 0.3s ease;
   }
   &:hover {
     path {
-      fill: $main-bright-blue;
+      stroke:  $secondary-bright-blue;
+      fill: $secondary-bright-blue;
     }
   }
   &.active {
     path {
-      fill: $secondary-dark-blue;
+      stroke: $main-dark-blue;
+      fill: $main-dark-blue;
     }
   }
 }

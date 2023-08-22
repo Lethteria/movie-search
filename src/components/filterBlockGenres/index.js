@@ -53,9 +53,9 @@ export default function FilterBlockGenres(){
 
     return(
         <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-                <Accordion.Header>Choose genres</Accordion.Header>
-                <Accordion.Body className={styles.wrap}>
+            <Accordion.Item eventKey="0" className={styles.wrap}>
+                <Accordion.Header className={styles.header}>Choose genres</Accordion.Header>
+                <Accordion.Body className={styles.genres}>
                     {genresList}
                 </Accordion.Body>
             </Accordion.Item>

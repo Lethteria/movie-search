@@ -7,7 +7,7 @@ import Badge from 'react-bootstrap/Badge';
 export default function RateBadge(props){
     const {rate, className} = props;
     return (
-        <Badge className={clsx(styles.rate, className)} >
+        <Badge className={clsx(styles.rate, className)} bg="primary">
             {rate}
         </Badge>
     )

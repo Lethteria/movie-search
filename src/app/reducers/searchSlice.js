@@ -26,7 +26,7 @@ export const searchByTitleAsync1 = createAsyncThunk(
             let result = await searchByTitle(title, page);
 
             if (result.total_results) return result
-            else throw new Error("Nothing found for this title.");
+            else throw new Error("Nothing found for this title. Please, try again.");
         }
     }
 )
@@ -36,7 +36,7 @@ export const searchUseFiltersAsync1 = createAsyncThunk(
         const {param,page} = data;
         let result = await searchUseFilters(param,page);
         if (result.total_results) return result;
-        else throw new Error("Nothing found for search parameters.");
+        else throw new Error("Nothing found for search parameters. Please, try again.");
     }
 )
 

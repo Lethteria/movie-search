@@ -1,11 +1,13 @@
-@import "../../colors";
+@import "../../colors1";
 
 .wrap {
-  background-color: $main-dark-blue;
+  background-color: $secondary-dark-blue;
+
+  a {
+    text-decoration: none;
+  }
 }
-.link {
-  color: $main-bright-blue;
-}
+
 .logo {
   width: 40px;
 }

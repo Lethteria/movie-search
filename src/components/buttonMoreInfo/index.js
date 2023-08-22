@@ -14,7 +14,7 @@ export default function ButtonMoreInfo(props){
 
     return (
         <Link to="/movie">
-            <Button variant="outline-primary"
+            <Button variant='primary'
                     onClick={onClickButton}
             >
                 More info

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useDeferredValue, useEffect, useState} from "react";
 
 import { useDispatch } from 'react-redux';
 
@@ -7,20 +7,31 @@ import styles from "./searchByTitle.module.scss"
 import {searchByTitleAsync1, setCurrentPage} from "../../app/reducers/searchSlice";
 import {setSearchParam} from "../../app/reducers/searchParamSlice";
 
-
 export default function SearchByTitle(){
 
     const dispatch = useDispatch();
+
     const [inputValue, setInputValue] = useState(" ");
+    const defferInputValue = useDeferredValue(inputValue);
 
     function onInputChange(e){
         setInputValue(e.target.value);
-        let title = e.target.value.trim();
+        //let title = e.target.value.trim();
+        //if ( !title.length) title = " ";
+        //dispatch(searchByTitleAsync1({title,page: 1}));
+        //dispatch(setSearchParam({title}));
+        //dispatch(setCurrentPage(1));
+    }
+
+    useEffect(() => {
+
+        let title = defferInputValue.trim();
         if ( !title.length) title = " ";
         dispatch(searchByTitleAsync1({title,page: 1}));
         dispatch(setSearchParam({title}));
         dispatch(setCurrentPage(1));
-    }
+        console.log("defferInputValue: " + defferInputValue + ", value: " + inputValue)
+    }, [inputValue, defferInputValue])
 
     return(
         <Form className={styles.form}>

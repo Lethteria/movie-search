@@ -51,7 +51,7 @@ export default function MoviePagination(){
     }
 
     return (
-            <Pagination className={styles.pagination}>
+            <Pagination className={styles.wrap}>
 
                 { (totalPages > 1 ) ? <>{prevButton}</> : null }
 

@@ -1,5 +1,14 @@
+@import "../../colors1";
 .wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  .header {
+    button {
+      color: $secondary-dark-blue;
+    }
+  }
 }
+.genres {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+ }
+
