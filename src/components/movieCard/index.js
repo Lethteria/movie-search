@@ -1,4 +1,4 @@
-import React, from "react";
+import React from "react";
 import styles from "./movieCard.module.scss";
 import clsx from 'clsx';
 
@@ -10,26 +10,26 @@ import CardOverview from "../cardOverview";
 export default function MovieCard(props){
 
     const {title, releaseDate, genres, imgSrc, rate, overview,
-           favoriteCardButtons, shortCardButtons, cardClassName} = props;
+           favoriteCardButtons, shortCardButtons, cardClassName, infoClassName} = props;
 
     return (
         <Card className={clsx( styles.wrap, cardClassName)}>
             <Card.Body>
 
-                <div className={styles.info}>
+                <div className={clsx( styles.info, infoClassName)}>
 
                     <Image src={imgSrc} rounded />
 
                     <RateBadge rate={rate} className={styles.rate}/>
 
                     <div>
-                        <Card.Title>{title}</Card.Title>
+                        <Card.Title className={styles.title}>{title}</Card.Title>
 
-                        <Card.Subtitle className="mb-2 text-muted">
-                            Release: {releaseDate}
+                        <Card.Subtitle className={clsx("mb-2 text-muted", styles.subtitle)}>
+                            Release: <span>{releaseDate}</span>
                         </Card.Subtitle>
 
-                        <Card.Subtitle className="mb-2 text-muted">
+                        <Card.Subtitle className={clsx("mb-2 text-muted", styles.subtitle)}>
                             Genres: <span>{genres}</span>
                         </Card.Subtitle>
 
@@ -39,9 +39,9 @@ export default function MovieCard(props){
 
                     </div>
 
-                </div>
+                    {shortCardButtons}
 
-                {shortCardButtons}
+                </div>
 
             </Card.Body>
         </Card>

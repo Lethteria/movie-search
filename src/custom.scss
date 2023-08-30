@@ -1,4 +1,4 @@
-@import "colors1";
+@import "colors";
 
 $theme-colors: (
         'primary': $main-dark-blue,
@@ -8,8 +8,9 @@ $theme-colors: (
         "secondary": $grey,
 );
 
-$pagination-color: $main-dark-blue;
-$pagination-active-bg: $main-dark-blue;
+//$pagination-color: $main-dark-blue;
+$pagination-active-bg: $third-dark-blue;
+$link-color: $third-dark-blue;
 
 @import '~bootstrap/scss/bootstrap';
 

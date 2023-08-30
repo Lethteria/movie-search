@@ -1,6 +1,6 @@
 .wrap {
-  padding-top: 30px;
-  margin-bottom: 50px;
+  padding-top: 20px;
+  margin-bottom: 20px;
   text-align: center;
 
   .tabWrap {
@@ -12,5 +12,18 @@
   width: 50%;
   a {
     display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    margin-bottom: 30px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .wrap {
+    padding-top: 30px;
+    margin-bottom: 50px;
   }
 }

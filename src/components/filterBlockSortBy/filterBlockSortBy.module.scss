@@ -4,7 +4,51 @@
   }
 }
 .buttonWrap {
+  position: relative;
+  height: 31px;
+  width: 150px;
+
+  & button {
+    width: 150px;
+    display: none;
+  }
+
+  &.open {
+    button {
+      display: block;
+    }
+  }
+
+  & .active {
+    display: block;
+  }
+}
+
+.buttonContainer {
+  position: absolute;
+  z-index: 20;
+
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 10px;
+
+  background-color: #ffffff;
+}
+
+@media (min-width: 576px){
+  .buttonWrap {
+    height: auto;
+    width: auto;
+
+    & button {
+      display: block;
+      width: auto;
+    }
+  }
+
+  .buttonContainer {
+    position: static;
+    flex-direction: row;
+  }
 }

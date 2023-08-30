@@ -44,7 +44,7 @@ export default function MovieList(){
     function displayMoviesList(moviesArr){
         return (
             <div className={styles.resultWrap}>
-                <Row xs={1} sm={2} md={4} className="g-4">
+                <Row xs={1} sm={2} lg={3} xxl={4} className="g-4">
                     {
                         moviesArr.map((movie) => (
                             <Col key={movie.id}>

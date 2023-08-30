@@ -23,7 +23,7 @@ export default function Header(){
     return(
         <header className={styles.wrap} >
             <Navbar >
-                <Container>
+                <Container fluid="lg">
 
                     <Link  to="/" className="navbar-brand" onClick={onLogoClick}>
                         <Logo className={styles.logo}/>

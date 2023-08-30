@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useCombobox} from "downshift";
 import Form from "react-bootstrap/Form";
-import style from "./filterInputAutocompl.module.scss";
+import styles from "./filterInputAutocompl.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchKeywordsAsync, selectSearchKeyword,
@@ -9,6 +9,12 @@ import {
 } from "../../app/reducers/searchParamSlice";
 
 export default function FilterInputAutocomplete(){
+
+    const openItem = {
+        cursor: 'pointer',
+        color: '#323f90',
+        backgroundColor: '#dfe0ff'
+    }
 
     const dispatch = useDispatch();
     const keywordList = useSelector(selectSearchKeywords);
@@ -59,7 +65,7 @@ export default function FilterInputAutocomplete(){
     }, [keywordItem])
 
     return (
-        <div className={style.wrap}>
+        <div className={styles.wrap}>
 
             <Form.Label htmlFor="inputMovieName" {...getLabelProps()}>Enter the keyword </Form.Label>
 
@@ -68,12 +74,12 @@ export default function FilterInputAutocomplete(){
                           {...getInputProps({refKey: 'ref'})}
             />
 
-                <ul className={`dropdown-menu ${isOpen ? (style.menuOpen) : ''}`} {...getMenuProps()} >
+                <ul className={`dropdown-menu ${isOpen ? (styles.menuOpen) : ''}`} {...getMenuProps()} >
                 {isOpen &&
                     keywordList.map((item, index) => (
-                        <li
+                        <li className={styles.openItem}
                             style={
-                                highlightedIndex === index ? {backgroundColor: '#bde4ff'} : {}
+                                highlightedIndex === index ? {...openItem} : {}
                             }
                             key={`${item.id}${index}`}
                             {...getItemProps({item, index})}
@@ -84,12 +90,12 @@ export default function FilterInputAutocomplete(){
                     ))}
                 </ul>
 
-            <p >
-                {selectedItem
-                    ? `You have selected ${selectedItem.name} by ${selectedItem.id}.`
-                    : 'Keyword is not selected!'}
-            </p>
-
         </div>
     )
 }
+
+// <p >
+//                 {selectedItem
+//                     ? `You have selected ${selectedItem.name} by ${selectedItem.id}.`
+//                     : 'Keyword is not selected!'}
+//             </p>

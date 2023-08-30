@@ -3,9 +3,8 @@
 }
 .info {
   display: flex;
-  margin-bottom: 15px;
-
   word-break: break-word;
+  position: relative;
 
   img {
     max-width: 154px;
@@ -15,12 +14,53 @@
 
   .rate {
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: -5px;
+    left: -5px;
   }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .subtitle {
+    font-size: 0.9375rem;
+
+    span {
+      font-weight: 400;
+    }
+  }
+
 }
 
 .buttons {
   display: flex;
   justify-content: space-between;
+}
+
+@media (min-width: 576px){
+  .info {
+
+    .title {
+      font-size: 1.125rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .info {
+    .subtitle {
+      font-weight: 500;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .info {
+    .title {
+      font-size: 1.25rem;
+    }
+  }
 }

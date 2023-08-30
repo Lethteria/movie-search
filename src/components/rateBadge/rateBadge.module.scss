@@ -1,3 +1,9 @@
 span.rate {
   font-size: 16px;
 }
+
+@media (max-width: 1199.98px){
+  span.rate {
+    font-size: 14px;
+  }
+}

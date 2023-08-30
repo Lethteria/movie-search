@@ -1,21 +1,37 @@
-@import "../../colors1";
+@import "../../colors";
 .wrap {
-  margin: 50px auto;
-
   background-color: $main-bright-blue;
 }
 
 .cardWrap {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
 .poster {
-  height: 439px;
+  width: 100%;
+  padding: 20px;
+  position: relative;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &::before {
+    content: "";
+    position: absolute;
+
+    height: 101%;
+    width: 101%;
+
+    left: -1px;
+    top: 0;
+    background: linear-gradient(to right, $main-bright-blue 2%, rgba(223, 224, 255, 0.2), rgba(224, 224, 233, 0.2) 70%, $main-bright-blue 98%);
+  }
 
   img {
+    width: 60%;
     position: relative;
-    margin-top: -0.85rem;
     padding: 0.5rem;
 
     border: 1px solid grey;
@@ -25,7 +41,6 @@
 
 .infoWrap {
   position: relative;
-  width: 780px;
   padding: 20px 30px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -34,11 +49,11 @@
     content: "";
     position: absolute;
     top: 0;
-    right: 0;
+    right: -1px;
     bottom: 0;
-    left: 0;
+    left: -1px;
 
-    background: linear-gradient(to right, rgba(223, 224, 255, 0.8), rgba(224, 224, 233, 0.8) 70%, $main-bright-blue 98%);
+    background: $main-bright-blue
   }
 
   h2 {
@@ -47,17 +62,31 @@
   }
 
 }
+.displayWrap {
+  display: flex;
+}
 
 .info {
   position: relative;
 }
+
 .infoDetails {
   display: flex;
+  flex-direction: column;
   color: #1b2250;
+
+  &:first-of-type {
+    flex-direction: column;
+  }
 
   h5 {
     margin-right: 15px;
-    font-weight: normal
+    font-weight: normal;
+    word-break: break-word;
+  }
+
+  &:last-child {
+    flex-direction: row;
   }
 }
 .subtitleWrap {
@@ -77,8 +106,10 @@
     margin-bottom: 0;
   }
 }
-.genres {
+.marginR {
   margin-right: 5px;
+}
+.genres {
 
   &::after {
     content: ",";
@@ -115,3 +146,146 @@
 .rate {
   margin-left: 15px;
 }
+
+@media (min-width: 576px) {
+  .poster {
+    img {
+      width: 30%;
+    }
+  }
+  .infoDetails {
+    flex-direction: row;
+  }
+}
+
+
+@media (min-width: 768px) {
+
+  .wrap {
+    margin: 0;
+    padding: 50px 0;
+    //height: 100vh;
+  }
+
+  .cardWrap {
+    flex-direction: column-reverse;
+  }
+
+  .poster {
+    margin: auto;
+    padding: 0;
+    height: 441px;
+    width: 40%;
+
+    &::before {
+      background-color: $main-bright-blue;
+    }
+
+    img {
+      width: 100%;
+      margin-top: -3rem;
+      z-index: 1;
+    }
+  }
+
+  .infoWrap {
+    width: auto;
+    height: 439px;
+
+    border-top: 5px solid $secondary-dark-blue;
+    border-radius: 5px;
+
+    &::before {
+      background: linear-gradient(to right, $main-bright-blue 1%, rgba(223, 224, 255, 0.8), rgba(224, 224, 233, 0.8) 70%, $main-bright-blue 98%);
+    }
+
+  }
+}
+
+
+@media (min-width: 992px){
+
+  .wrap {
+    margin: 50px auto;
+    padding: 0;
+    height: auto;
+  }
+
+  .cardWrap {
+    flex-direction: row;
+  }
+
+  .poster {
+    margin: 0;
+    width: auto;
+
+    &::before {
+      height: 100%;
+    }
+
+    img {
+      height: 466px;
+      width: auto;
+      max-width: initial;
+
+      margin-top: -0.85rem;
+    }
+  }
+
+  .infoWrap {
+    width: 780px;
+    height: auto;
+    border: none;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .infoDetails {
+
+    &:first-of-type {
+      flex-direction: row;
+    }
+
+    h5 {
+      font-size: 1.125rem;
+    }
+  }
+
+  .tagline {
+    font-size: 1.125rem;
+  }
+
+  .subtitleWrap {
+    svg {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .infoWrap {
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .infoDetails {
+    h5 {
+      font-size: 1.25rem;
+    }
+  }
+
+  .tagline {
+    font-size: 1.25rem;
+  }
+
+  .subtitleWrap {
+    svg {
+      font-size: 1.25rem;
+    }
+  }
+
+}
+

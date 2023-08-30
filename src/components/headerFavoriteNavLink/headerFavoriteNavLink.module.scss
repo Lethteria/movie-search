@@ -1,9 +1,11 @@
-@import "../../colors1";
+@import "../../colors";
 
 .wrap {
   position: relative;
   display: flex;
   align-items: center;
+
+  margin-right: 20px;
 
   color: $main-bright-blue;
 

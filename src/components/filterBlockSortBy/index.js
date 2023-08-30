@@ -1,15 +1,18 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./filterBlockSortBy.module.scss"
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {setSearchParam} from "../../app/reducers/searchParamSlice";
 
+import clsx from 'clsx';
+
 function SortButton(props){
-    const {id, activeId, onClick, children} = props;
+    const {id, activeId, onClick, children, className} = props;
     return (
         <Button variant = {(activeId === id) ? "primary" : "outline-primary"}
                 size="sm"
                 id={id}
+                className={clsx({[styles.active]:(activeId === id)})}
                 onClick={onClick}
         >
             {children}
@@ -28,10 +31,12 @@ export default function FilterBlockSortBy(){
 
     const activeId = useSelector((state) => state.searchParam.data.sortBy);
     const dispatch = useDispatch();
+    const [isOpen, setIsOpen] = useState(false);
 
     function onClickSortByBtn(e){
         let sortBy = e.target.id;
         dispatch(setSearchParam({sortBy: sortBy}))
+        setIsOpen(!isOpen)
     }
 
     useEffect(() => {
@@ -42,15 +47,21 @@ export default function FilterBlockSortBy(){
         <div className={styles.wrap}>
             <p>Sort results</p>
 
-            <div className={styles.buttonWrap}>
-                {sortBtnArr.map((item) => (
-                    <SortButton id={item.id}
-                                activeId={activeId}
-                                onClick={onClickSortByBtn}
-                                key={item.id}>
-                        {item.text}
-                    </SortButton>
-                ))}
+            <div className={clsx(styles.buttonWrap,
+                                {[styles.open]: isOpen}
+                            )}
+            >
+                <div className={styles.buttonContainer}>
+                    {sortBtnArr.map((item) => (
+                        <SortButton id={item.id}
+                                    activeId={activeId}
+                                    onClick={onClickSortByBtn}
+                                    key={item.id}>
+                            {item.text}
+                        </SortButton>
+                    ))}
+                </div>
+
             </div>
 
         </div>

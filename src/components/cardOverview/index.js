@@ -6,14 +6,14 @@ import Button from "react-bootstrap/Button";
 export default function CardOverview({text}) {
 
     const [fullOverview, setFullOverview] = useState(false);
-    const showReadMore = (text.length > 200) ;
+    const showReadMore = (text.length > 120) ;
     //const [readMore, setReadMore] = useState(false);
 
     function onClickReadMore(){
         setFullOverview(!fullOverview);
     }
 
-    const movieOverview = fullOverview ? text : text.slice(0, 200);
+    const movieOverview = fullOverview ? text : text.slice(0, 120);
 
     return (
         <Card.Text className={styles.wrap}>

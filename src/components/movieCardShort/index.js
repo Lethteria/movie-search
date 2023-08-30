@@ -27,6 +27,7 @@ export default function MovieCardShort(props){
                        <ShortCardButtons {...props} />
                    }
                    cardClassName={styles.wrap}
+                   infoClassName={styles.info}
         />
     )
 }

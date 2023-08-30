@@ -36,7 +36,7 @@ export default function MovieCardFull(){
             genresList = <h5>
                             {
                                 genres.map( item =>
-                                    <span className={styles.genres} key={item.id}>
+                                    <span className={`${styles.genres} ${styles.marginR}`} key={item.id}>
                                             {item.name}
                                         </span>
                                 )
@@ -51,7 +51,7 @@ export default function MovieCardFull(){
                                     </h5>
 
         movieCard =  <div className={styles.cardWrap}>
-            <div className={styles.poster}>
+            <div className={styles.poster} style={{backgroundImage: `${path}`}}>
                 <Image src={poster} thumbnail />
             </div>
 
@@ -64,25 +64,31 @@ export default function MovieCardFull(){
                     </h2>
 
                     <div className={styles.infoDetails}>
+
                         {genresList}
-                        <h5 className={styles.subtitleWrap}>
-                            <MdAccessTime/>
-                            {runtime} min
-                        </h5>
-                        <h5 className={styles.subtitleWrap}>
-                            <MdLanguage/>
-                            {language.toUpperCase()}
-                        </h5>
+
+                        <div className={styles.displayWrap}>
+                            <h5 className={styles.subtitleWrap}>
+                                <MdAccessTime/>
+                                {runtime} min
+                            </h5>
+                            <h5 className={styles.subtitleWrap}>
+                                <MdLanguage/>
+                                {language.toUpperCase()}
+                            </h5>
+                        </div>
+
                     </div>
 
                     <div className={styles.infoDetails}>
                         <h5 className={styles.subtitleWrap}>
                             <VscCalendar />
-                            {status}
-                        </h5>
-                        <h5>
+                            <span className={styles.marginR}>
+                                {status}
+                            </span>
                             {releaseDate}
                         </h5>
+
                         <h5 className={styles.subtitleWrap}>
                             <AiOutlineDollar />
                             {budget}

@@ -1,3 +1,4 @@
+@import "../../colors";
 .wrap {
   position: relative;
 }
@@ -5,4 +6,8 @@
   display: block;
   width: 100%;
   padding: 10px;
+}
+.open-item {
+  cursor: pointer;
+  background-color: $secondary-bright-blue;
 }

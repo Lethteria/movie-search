@@ -1,4 +1,17 @@
 .form {
-  width: 50%;
+  width: 100%;
   margin: auto;
 }
+
+@media (min-width: 768px) {
+  .form {
+    width: 75%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .form {
+    width: 50%;
+  }
+}
+

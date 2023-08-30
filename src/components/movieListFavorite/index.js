@@ -18,7 +18,7 @@ export default function MovieListFavorite(){
     function displayMoviesList(moviesArr){
         return (
             <div >
-                <Row xs={1} sm={1} md={2} className="g-5">
+                <Row xs={1} sm={1} xl={2} className="g-5">
                     {
                         moviesArr.map((movie) => (
                             <Col key={movie.id}>
@@ -39,7 +39,7 @@ export default function MovieListFavorite(){
     }
 
     return (
-        <Container>
+        <Container fluid="lg">
             { totalMovies
                 ? displayMoviesList(movies)
                 : <ErrorAlert>
