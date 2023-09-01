@@ -15,7 +15,6 @@ export function getAllMovies(page){
 }
 
 export async function searchByTitle(title,page){
-        console.log("title: " + title);
         let response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${title}&include_adult=false&language=en-US&page=${page}`, options);
         if (response.ok) return response.json();
         else throw Error("search error nothing found");
@@ -30,12 +29,10 @@ export async function searchUseFilters(param,page){
     }
     if (param.keyword) {
         let key = param.keyword.id;
-        console.log(key);
         str = str + `&with_keywords=${key}`
     }
 
     let response = await fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&vote_count.gte=150${str}`, options)
-    console.log(str);
     if (response.ok) return response.json();
     else throw Error;
 }
@@ -67,7 +64,6 @@ export async function getMovieImg(id){
     if (response.ok) {
         let imgArr = response.json();
         return imgArr.backdrops[0].file_path;
-        //return response.json();
     }
     else throw new Error("No img") ;
 }

@@ -47,9 +47,6 @@ export const searchSlice = createSlice({
         setCurrentPage(state, action){
             state.currentPage = action.payload
         },
-        resetStatus(state){
-            state.status = "idle"
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -105,7 +102,7 @@ export const searchSlice = createSlice({
     }
 })
 
-export const { setCurrentPage, resetStatus } = searchSlice.actions;
+export const { setCurrentPage } = searchSlice.actions;
 
 export const selectSearchResult = (state) => state.search.data;
 export const selectSearchStatus = (state) => state.search.status;

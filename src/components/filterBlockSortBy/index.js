@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import styles from "./filterBlockSortBy.module.scss"
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
@@ -7,7 +7,7 @@ import {setSearchParam} from "../../app/reducers/searchParamSlice";
 import clsx from 'clsx';
 
 function SortButton(props){
-    const {id, activeId, onClick, children, className} = props;
+    const {id, activeId, onClick, children} = props;
     return (
         <Button variant = {(activeId === id) ? "primary" : "outline-primary"}
                 size="sm"
@@ -38,10 +38,6 @@ export default function FilterBlockSortBy(){
         dispatch(setSearchParam({sortBy: sortBy}))
         setIsOpen(!isOpen)
     }
-
-    useEffect(() => {
-        console.log ("rerender sort by block, state " + activeId);
-    },)
 
     return(
         <div className={styles.wrap}>

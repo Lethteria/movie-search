@@ -1,7 +1,13 @@
 import React from "react";
+import ErrorAlert from "../../components/errorAlert";
+import Title from "../../components/title";
 
 export default function NotFoundPage(){
     return (
-        <h2> Page is not found </h2>
+        <ErrorAlert>
+            <Title>
+                page is not found
+            </Title>
+        </ErrorAlert>
     )
 }

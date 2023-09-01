@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./searchMoviePage.module.scss";
 
 import SearchBlock from "../../components/searchBlock";
 import ResultBlock from "../../components/resultBlock";

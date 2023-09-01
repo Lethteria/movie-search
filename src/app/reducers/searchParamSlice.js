@@ -7,7 +7,6 @@ const initialState = {
         title: null,
         keyword: null,
         keywords: [],
-        selectKeyword: null,
         genres: [],
         sortBy: "vote_average.desc"
     },
@@ -38,9 +37,7 @@ export const searchParamSlice = createSlice({
             let index = state.data.genres.indexOf(action.payload);
             state.data.genres.splice(index, 1);
         },
-        resetSearchTitle(state){
-            state.data.title = null;
-        },
+
         resetSearchFilter(state){
             state.data.keyword = null;
             state.data.keywords = [];
@@ -60,12 +57,14 @@ export const searchParamSlice = createSlice({
             .addCase(fetchKeywordsAsync.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.error.message;
+                state.data.keyword = null;
+                state.data.keywords = [];
             })
     }
 })
 
 export const {setSearchParam, removeSearchGenres,
-              resetSearchTitle, resetSearchFilter} = searchParamSlice.actions;
+              resetSearchFilter} = searchParamSlice.actions;
 
 export const selectSearchParam = (state) => state.searchParam.data;
 export const selectSearchKeywords = (state) => state.searchParam.data.keywords;

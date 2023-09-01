@@ -26,7 +26,6 @@ export const genresSlice = createSlice({
                 .addCase(fetchGenresAsync.fulfilled, (state, action) => {
                     state.status = "succeeded";
                     state.data = action.payload;
-                    console.log(action.payload)
                 })
                 .addCase(fetchGenresAsync.rejected, (state, action) => {
                     state.status = "failed";

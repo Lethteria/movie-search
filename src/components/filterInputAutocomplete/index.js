@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {useCombobox} from "downshift";
-import Form from "react-bootstrap/Form";
 import styles from "./filterInputAutocompl.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchKeywordsAsync, selectSearchKeyword,
     selectSearchKeywords, setSearchParam
 } from "../../app/reducers/searchParamSlice";
+import {useCombobox} from "downshift";
+import Form from "react-bootstrap/Form";
+import useDebounce from "../../hooks/useDebounce";
 
 export default function FilterInputAutocomplete(){
 
@@ -17,8 +18,9 @@ export default function FilterInputAutocomplete(){
     }
 
     const dispatch = useDispatch();
+    const debounceDispatch = useDebounce(dispatch, 500);
     const keywordList = useSelector(selectSearchKeywords);
-    const keywordItem = useSelector(selectSearchKeyword)
+    const keywordItem = useSelector(selectSearchKeyword);
     const [selectedItem, setSelectedItem] = useState(keywordItem);
 
     const stateReducer = React.useCallback((state, actionAndChanges) => {
@@ -26,11 +28,15 @@ export default function FilterInputAutocomplete(){
 
         switch (type) {
             case useCombobox.stateChangeTypes.InputChange:
-                dispatch(fetchKeywordsAsync(changes.inputValue));
+                debounceDispatch(fetchKeywordsAsync(changes.inputValue));
+
                 return {...changes,}
 
             case useCombobox.stateChangeTypes.ItemClick:
                 return {...changes,}
+
+            case useCombobox.stateChangeTypes.InputBlur:
+                return changes.selectedItem ? {...changes,} : {inputValue: " "}
 
             default:
                 return changes
@@ -61,7 +67,9 @@ export default function FilterInputAutocomplete(){
     })
 
     useEffect(() => {
-        if (keywordItem === null) setSelectedItem(null);
+        if (selectedItem && keywordItem === null) {
+            setSelectedItem(null);
+        }
     }, [keywordItem])
 
     return (
@@ -74,28 +82,22 @@ export default function FilterInputAutocomplete(){
                           {...getInputProps({refKey: 'ref'})}
             />
 
-                <ul className={`dropdown-menu ${isOpen ? (styles.menuOpen) : ''}`} {...getMenuProps()} >
+            <ul className={`dropdown-menu ${isOpen ? (styles.menuOpen) : ''}`} {...getMenuProps()} >
                 {isOpen &&
                     keywordList.map((item, index) => (
-                        <li className={styles.openItem}
-                            style={
+                        <li style={
+                            //(keywordItem && item.id === keywordItem.id) ? {...openItem} : {}
                                 highlightedIndex === index ? {...openItem} : {}
                             }
                             key={`${item.id}${index}`}
                             {...getItemProps({item, index})}
                         >
                             <span>{item.name}</span>
-                            <span >{item.id}</span>
                         </li>
-                    ))}
-                </ul>
+                    ))
+                }
+            </ul>
 
         </div>
     )
 }
-
-// <p >
-//                 {selectedItem
-//                     ? `You have selected ${selectedItem.name} by ${selectedItem.id}.`
-//                     : 'Keyword is not selected!'}
-//             </p>
