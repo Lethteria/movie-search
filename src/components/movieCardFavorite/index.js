@@ -25,6 +25,7 @@ export default function MovieCardFavorite(props){
                    rate={rate}
                    overview={overview}
                    favoriteCardButtons={<FavoriteCardButtons id={id} />}
+                   infoClassName={styles.wrap}
         />
     )
 }

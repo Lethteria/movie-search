@@ -4,41 +4,26 @@ import MovieCardShort from "../movieCardShort";
 import Preloader from "../preloader";
 import ErrorAlert from "../errorAlert";
 
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import {
-    fetchAllMoviesAsync1, searchByTitleAsync1, searchUseFiltersAsync1,
-    selectSearchCurrentPage, selectSearchError, selectSearchResult,
-    selectSearchStatus, selectSearchType
-} from "../../app/reducers/searchSlice";
+import { selectSearchCurrentPage, selectSearchError,
+         selectSearchResult, selectSearchStatus
+        } from "../../app/reducers/searchSlice";
 
-import {selectSearchParam} from "../../app/reducers/searchParamSlice";
+import useSearch from "../../hooks/useSearch";
 
 
 export default function MovieList(){
-    const dispatch = useDispatch();
     const searchResult = useSelector(selectSearchResult);
     const searchResultStatus = useSelector(selectSearchStatus);
     const searchCurrentPage = useSelector(selectSearchCurrentPage);
-    const searchType = useSelector(selectSearchType);
-    const searchParam  = useSelector(selectSearchParam);
+    const search = useSearch();
     const searchError = useSelector(selectSearchError);
 
     useEffect(() => {
-
-        switch (searchType) {
-            case "all":
-                dispatch(fetchAllMoviesAsync1(searchCurrentPage));
-                break;
-            case "title":
-                dispatch(searchByTitleAsync1({title: searchParam.title,page: searchCurrentPage}));
-                break;
-            case "filters":
-                dispatch(searchUseFiltersAsync1({param: searchParam,page: searchCurrentPage}));
-                break;
-        }
+        search();
     }, [searchCurrentPage])
 
     function displayMoviesList(moviesArr){

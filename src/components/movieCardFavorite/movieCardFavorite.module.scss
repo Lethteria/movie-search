@@ -1,4 +1,39 @@
 .buttons {
   display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   justify-content: space-between;
+
+  a {
+    margin-bottom: 20px;
+
+    & + button {
+      width: max-content;
+    }
+  }
+}
+
+.wrap {
+  p {
+    display: none;
+  }
+}
+
+@media (min-width: 567px) {
+  .buttons {
+    flex-direction: row;
+
+    a {
+      margin-bottom: 0;
+    }
+  }
+  .wrap {
+    p {
+      display: block;
+    }
+  }
+}
+
+@media (min-width: 992px){
+
 }
