@@ -4,8 +4,8 @@ import {mapMoviesData} from "../mapingDataHelper";
 
 const initialState = {
     data: null,
-    status: 'idle',// 'idle' | 'loading' | 'succeeded' | 'failed'
-    error: null,//string | null
+    status: 'idle',
+    error: null,
     currentPage: 1,
     totalPages: 0,
     searchType: "all"
@@ -103,7 +103,6 @@ export const searchSlice = createSlice({
 })
 
 export const { setCurrentPage } = searchSlice.actions;
-
 export const selectSearchResult = (state) => state.search.data;
 export const selectSearchStatus = (state) => state.search.status;
 export const selectSearchCurrentPage = (state) => state.search.currentPage;

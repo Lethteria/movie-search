@@ -17,23 +17,9 @@ export const fetchMovieAsync = createAsyncThunk(
     }
 )
 
-export const fetchFullMovieImg = createAsyncThunk(
-    "movie/fetchFullMovieImgAsync",
-    async function(id){
-        let response = await getMovieImg(id)
-        console.log(response);
-    }
-)
-
 export const movieSlice = createSlice({
     name: "movie",
     initialState,
-    reducers:{
-        removeMovie(state){
-            state.data = null;
-            state.status = "idle";
-        }
-    },
     extraReducers:(builder) => {
         builder
             .addCase(fetchMovieAsync.pending, (state) => {
@@ -51,7 +37,6 @@ export const movieSlice = createSlice({
     }
 })
 
-export const {removeMovie} = movieSlice.actions;
 export const selectMovie = (state) => state.movie.data;
 export  const selectMovieStatus = (state) => state.movie.status;
 
