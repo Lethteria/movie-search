@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {getMovie, getMovieImg} from "../movieSearchAPI";
+import {getMovie} from "../movieSearchAPI";
 import {mapMoviesFullData} from "../mapingDataHelper";
 
 const initialState = {
