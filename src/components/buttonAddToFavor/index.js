@@ -3,7 +3,7 @@ import {GrFavorite} from "react-icons/gr";
 import styles from "./buttonAddToFavor.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {addMovie, removeMovie, selectFavoriteMovies} from "../../app/reducers/favoriteSlice";
-import clsx from 'clsx';
+import clsx from "clsx";
 import button from "bootstrap/js/src/button";
 
 export default function ButtonAddToFavor(props){
