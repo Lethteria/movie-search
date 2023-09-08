@@ -59,8 +59,8 @@ export default function MovieCardFull(){
                 <div className={styles.info}>
 
                     <h2>
-                        {title}
-                        <span className={styles.year}>( {year} )</span>
+                        <span className={styles.title}>{title}</span>
+                        <span className={styles.year}>({year})</span>
                     </h2>
 
                     <div className={styles.infoDetails}>

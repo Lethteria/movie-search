@@ -140,9 +140,12 @@
     font-size: 1.5rem;
   }
 }
+.title {
+  display: inline-block;
+  margin-right: 10px;
+}
 .year {
   font-weight: 500;
-  margin-left: 10px;
 }
 .rate {
   margin-left: 15px;
