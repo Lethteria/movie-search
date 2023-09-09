@@ -9,8 +9,14 @@
   width: 150px;
 
   & button {
-    width: 150px;
+    width: 160px;
     display: none;
+
+    svg {
+      display: none;
+      margin-left: 5px;
+      font-size: 1rem;
+    }
   }
 
   &.open {
@@ -21,6 +27,10 @@
 
   & .active {
     display: block;
+
+    svg {
+      display: inline-block;
+    }
   }
 }
 
@@ -44,6 +54,12 @@
     & button {
       display: block;
       width: auto;
+    }
+
+    & .active {
+      svg {
+        display: none;
+      }
     }
   }
 

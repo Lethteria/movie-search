@@ -3,6 +3,7 @@ import styles from "./filterBlockSortBy.module.scss"
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {setSearchParam} from "../../app/reducers/searchParamSlice";
+import {AiOutlineDown} from "react-icons/ai";
 
 import clsx from 'clsx';
 
@@ -16,6 +17,7 @@ function SortButton(props){
                 onClick={onClick}
         >
             {children}
+            <AiOutlineDown/>
         </Button>
     )
 }
